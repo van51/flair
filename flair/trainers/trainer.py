@@ -569,10 +569,10 @@ class ModelTrainer:
         log_line(log)
         log.info("Testing using best model ...")
 
-        self.model.eval()
-
         if (base_path / "best-model.pt").exists():
             self.model = self.model.load(base_path / "best-model.pt")
+
+        self.model.eval()
 
         test_results, test_loss = self.model.evaluate(
             DataLoader(

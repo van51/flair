@@ -422,6 +422,23 @@ class FastTextEmbeddings(TokenEmbeddings):
         self.field = field
         super().__init__()
 
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        del state['precomputed_word_embeddings']
+        return state
+
+    def __setstate__(self, state):
+        self.__dict__.update(state)
+
+        try:
+            self.precomputed_word_embeddings = gensim.models.FastText.load_fasttext_format(
+                str(self.embeddings)
+            )
+        except:
+            self.precomputed_word_embeddings = gensim.models.FastText.load(
+                str(self.embeddings)
+            )
+
     @property
     def embedding_length(self) -> int:
         return self.__embedding_length

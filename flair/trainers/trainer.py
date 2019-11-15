@@ -570,7 +570,9 @@ class ModelTrainer:
         log.info("Testing using best model ...")
 
         if (base_path / "best-model.pt").exists():
-            self.model = self.model.load(base_path / "best-model.pt")
+            cls = type(self.model)
+            del self.model
+            self.model = cls.load(base_path / "best-model.pt")
 
         self.model.eval()
 

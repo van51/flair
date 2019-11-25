@@ -316,6 +316,10 @@ class WordEmbeddings(TokenEmbeddings):
             self.precomputed_word_embeddings = gensim.models.KeyedVectors.load_word2vec_format(
                 str(embeddings), binary=True
             )
+        elif str(embeddings).endswith('.w2v'):
+            self.precomputed_word_embeddings = gensim.models.Word2Vec.load(
+                str(embeddings)
+            )
         else:
             self.precomputed_word_embeddings = gensim.models.KeyedVectors.load(
                 str(embeddings)

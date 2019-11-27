@@ -546,7 +546,7 @@ def build_spacy_tokenizer(model) -> Callable[[str], List[Token]]:
         for word in doc:
             word: SpacyToken = word
             token = Token(
-                text=word.text, start_position=word.idx, whitespace_after=True
+                text=word.text, start_position=word.idx, whitespace_after=word.text != word.text_with_ws
             )
             tokens.append(token)
 
